@@ -22,6 +22,8 @@ server.use(bodyParser.json());
 
 server.use(cors());
 
+server.use("/uploads", express.static("uploads"));
+
 // Admin Routes
 server.use("/api/admin", adminRoutes);
 // User Routes
@@ -36,7 +38,6 @@ server.use("/api/admin/dashboard", dashboardRoutes);
 server.get('/', (request,response) => {
     response.send("<h1>Server is working !!</h1>");
 })
-
 
 server.listen(5000, () => {
     mongoose.connect('mongodb://127.0.0.1:27017/intern')

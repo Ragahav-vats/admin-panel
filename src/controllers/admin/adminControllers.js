@@ -55,6 +55,8 @@ const loginAdmin = async (request, response) => {
   try {
 
     const { email, password } = request.body;
+//     console.log("Email:", email);
+// console.log("Password:", password);
 
     if (!email || !password) {
       return response.status(400).json({
@@ -65,6 +67,7 @@ const loginAdmin = async (request, response) => {
 
     // Find admin by email
     const admin = await Admin.findOne({ email });
+    console.log("Admin found:", admin);
 
     if (!admin) {
       return response.status(404).json({
@@ -113,7 +116,7 @@ const loginAdmin = async (request, response) => {
 const updateAdminProfile = async (request, response) => {
   try {
 
-    const { name, email, profileImage } = request.body;
+    const { name, email} = request.body;
 
     const admin = await Admin.findById(request.params.id);
 
@@ -133,8 +136,8 @@ const updateAdminProfile = async (request, response) => {
       admin.email = email;
     }
 
-    if (profileImage !== undefined) {
-      admin.profileImage = profileImage;
+     if (request.file) {
+      admin.profileImage = request.file.path;
     }
 
     admin.updatedAt = new Date();
