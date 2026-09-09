@@ -201,6 +201,47 @@ const deleteUser = async (request, response) => {
   }
 };
 
+const blockUser = async (request, response) => {
+  try {
+
+    const user = await User.findById(request.params.id);
+
+    if (!user) {
+      return response.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    user.isBlocked = !user.isBlocked;
+    user.updatedAt = new Date();
+
+    await user.save();
+
+    response.status(200).json({
+      success: true,
+      message: user.isBlocked
+        ? "User blocked successfully"
+        : "User unblocked successfully",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        mobile: user.mobile,
+        isBlocked: user.isBlocked,
+      },
+    });
+
+  } catch (error) {
+
+    response.status(500).json({
+      success: false,
+      message: error.message,
+    });
+
+  }
+};
+
 
 module.exports = {
   createUser,
@@ -208,4 +249,5 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
+  blockUser,
 };

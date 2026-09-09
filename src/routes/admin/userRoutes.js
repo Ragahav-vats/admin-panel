@@ -1,6 +1,6 @@
 const express = require("express");
 const protectAdmin = require("../../middleware/authMiddleware");
-const { createUser, getUsers, getUserById, updateUser, deleteUser } = require("../../controllers/admin/userControllers");
+const { createUser, getUsers, getUserById, updateUser, deleteUser, blockUser } = require("../../controllers/admin/userControllers");
 
 const router = express.Router();
 
@@ -18,6 +18,9 @@ router.put("/update/:id", protectAdmin, updateUser);
 
 // Delete User
 router.delete("/delete/:id", protectAdmin, deleteUser);
+
+// Block / Unblock User
+router.put("/block/:id", protectAdmin, blockUser);
 
 
 // Get User By ID
