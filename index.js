@@ -9,6 +9,11 @@ const userRoutes = require("./src/routes/admin/userRoutes");
 const courseRoutes = require("./src/routes/admin/courseRoutes");
 const internshipRoutes = require("./src/routes/admin/internshipRoutes");
 const dashboardRoutes = require("./src/routes/admin/dashboardRoutes");
+const websiteCourseRoutes = require("./src/routes/website/websiteCourseRoutes");
+const websitePaymentRoutes = require("./src/routes/website/websitePaymentRoutes");
+const websiteContactRoutes = require("./src/routes/website/websiteContactRoutes");
+const websiteInternshipRoutes = require("./src/routes/website/websiteInternshipRoutes");
+const websiteAuthRoutes = require("./src/routes/website/websiteAuthRoutes");
 
 
 const server = express();
@@ -34,6 +39,13 @@ server.use("/api/admin/courses", courseRoutes);
 server.use("/api/admin/internships", internshipRoutes);
 
 server.use("/api/admin/dashboard", dashboardRoutes);
+
+// website
+server.use("/api/courses", websiteCourseRoutes);
+server.use("/api/payment", websitePaymentRoutes);
+server.use("/api/contact", websiteContactRoutes);
+server.use("/api/internships", websiteInternshipRoutes);
+server.use("/api/auth", websiteAuthRoutes);
 
 server.get('/', (request,response) => {
     response.send("<h1>Server is working !!</h1>");
