@@ -89,7 +89,8 @@ const loginUser = async (request, response) => {
     if (!user) {
       return response.status(404).json({
         success: false,
-        message: "Invalid email or password"
+        message: "Invalid email or password",
+         redirectToRegister: true
       });
     }
 
