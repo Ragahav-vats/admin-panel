@@ -1,4 +1,5 @@
 const Course = require("../../models/course");
+const mongoose = require("mongoose");
 
 const getWebsiteCourses = async (request, response) => {
   try {
@@ -44,8 +45,27 @@ const getWebsiteCourses = async (request, response) => {
 
 const getWebsiteCourseById = async (request, response) => {
   try {
+
+    const { id } = request.params;
+
+    // Check course ID
+    if (!id) {
+      return response.status(400).json({
+        success: false,
+        message: "Course ID is required"
+      });
+    }
+
+    // Check valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({
+        success: false,
+        message: "Invalid course ID"
+      });
+    }
+
     const course = await Course.findOne({
-      _id: request.params.id,
+      _id: id,
       status: "active"
     });
 
@@ -72,10 +92,14 @@ const getWebsiteCourseById = async (request, response) => {
     });
 
   } catch (error) {
+
+    console.error("Get Course By ID Error:", error);
+
     response.status(500).json({
       success: false,
       message: error.message
     });
+
   }
 };
 
