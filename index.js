@@ -51,8 +51,8 @@ server.get('/', (request,response) => {
     response.send("<h1>Server is working !!</h1>");
 })
 
-server.listen(5000, () => {
-    mongoose.connect('mongodb://127.0.0.1:27017/intern')
+server.listen(process.env.PORT, () => {
+    mongoose.connect(process.env.MONGODB_URL)
    .then(() => console.log('Connected!'))
    .catch((error) => {
      console.log(error);
